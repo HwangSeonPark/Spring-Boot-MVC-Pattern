@@ -19,6 +19,8 @@ public class WebConfig implements WebMvcConfigurer {
 	@Description("Thymeleaf template resolver serving HTML")
 	public ClassLoaderTemplateResolver templateResolver() {
 		
+		
+		
 		var templateResolver = new ClassLoaderTemplateResolver();
 		templateResolver.setPrefix("templates/");
 		templateResolver.setSuffix(".html");
