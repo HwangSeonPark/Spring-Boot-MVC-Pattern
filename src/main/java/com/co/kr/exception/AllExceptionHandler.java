@@ -14,6 +14,7 @@ import com.co.kr.util.CommonUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
+
 @Slf4j
 @ControllerAdvice
 public class AllExceptionHandler {
@@ -25,7 +26,7 @@ public class AllExceptionHandler {
 	public HttpEntity<ErrorResponse> handlerBindingResultException(RequestException exception){
 		
 		// catch exception
-		if(exception.getException() != null) {
+		if(exception.getException() !=null ) {
 			Exception ex = exception.getException();
 			StackTraceElement [] steArr = ex.getStackTrace();
 			for(StackTraceElement ste : steArr) {
@@ -37,7 +38,7 @@ public class AllExceptionHandler {
 		ErrorResponse errRes = ErrorResponse.builder()
 				.result(exception.getCode().getResult())
 				.resultDesc(exception.getCode().getResultDesc())
-				.resDate(CommonUtils.currentTime())
+				.resData(CommonUtils.currentTime())
 				.reqNo(exception.getReqNo())
 				.httpStatus(exception.getHttpStatus())
 				.build();
@@ -54,7 +55,7 @@ public class AllExceptionHandler {
 		ErrorResponse errRes = ErrorResponse.builder()
 				.result(exception.getCode().getResult())
 				.resultDesc(exception.getCode().getResultDesc())
-				.resDate(CommonUtils.currentTime())
+				.resData(CommonUtils.currentTime())
 				.reqNo(CommonUtils.currentTime())
 				.build();
 		return new ResponseEntity<ErrorResponse>(errRes, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -69,5 +70,4 @@ public class AllExceptionHandler {
 		mv.setViewName("commons/commonErr.html");
 		return mv;
 	}
-	
 }
