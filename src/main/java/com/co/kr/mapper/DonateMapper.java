@@ -34,4 +34,8 @@ public interface DonateMapper {
 
 	//select one file
 	public List<DonateFileDomain> donateSelectOneFile(HashMap<String, Object> map);
+	
+	public List<DonateListDomain> dnsearchTitle(HashMap<String, String> map);
+	
+	
 }

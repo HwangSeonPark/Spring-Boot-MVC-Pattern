@@ -97,7 +97,7 @@ public class UserController {
 	};
 	
 	@RequestMapping(value = "dnList")
-	public ModelAndView dnList() { 
+	public ModelAndView dnList() {
 		ModelAndView mav = new ModelAndView();
 		List<DonateListDomain> items = donateService.donateList();
 		System.out.println("items ==> "+ items);

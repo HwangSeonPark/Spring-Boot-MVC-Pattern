@@ -6,7 +6,7 @@
 	<!--select all -->
 	<select id="donateList"
 		resultType="com.co.kr.domain.DonateListDomain">
-		SELECT dn_seq,dn_loc, mb_id, dn_title, dn_content, dn_create_at,
+		SELECT dn_seq, dn_loc, mb_id, dn_title, dn_content, dn_create_at,
 		dn_update_at
 		FROM jsp.donate order by dn_update_at desc
 	</select>
@@ -103,4 +103,13 @@
 		up_file_size
 		FROM jsp.view_donate where dn_seq = #{dnSeq}
 	</select>
+	
+	
+	<select id="dnsearchTitle" parameterType="map"
+      resultType="com.co.kr.domain.DonateListDomain">
+      SELECT dn_seq, dn_loc, mb_id, dn_title, dn_content, dn_create_at,
+		dn_update_at FROM jsp.donate
+      WHERE dn_title LIKE CONCAT('%', #{dnTitle}, '%') order by dn_update_at desc
+   </select>
 </mapper>
+	

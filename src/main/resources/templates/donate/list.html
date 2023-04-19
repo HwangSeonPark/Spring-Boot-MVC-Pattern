@@ -1,4 +1,12 @@
 <div class="section list">
+	<div class="section form" th:unless="${detail}"
+		style="display: block; text-align: center;">
+		<form class="form" role="form" action="searchContent" method="post">
+			<input id="searchtitle" type="text" name="searchtitle"
+				placeholder="제목을 입력하세요" style="display: inline-block; width: 80%;" />
+			<button type="submit" style="display: inline-block;">검색</button>
+		</form>
+	</div>
 	<table>
 		<th:block th:if="${items}">
 			<colgroup>

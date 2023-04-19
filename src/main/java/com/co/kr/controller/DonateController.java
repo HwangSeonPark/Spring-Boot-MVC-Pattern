@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,7 +49,7 @@ public class DonateController {
 		fileListVO.setContent(""); // 초기화
 		fileListVO.setTitle(""); // 초기화
 
-		// 화면에서 넘어올때는 bdSeq String이라 string으로 변환해서 넣어즘
+	
 		mav = dnSelectOneCall(fileListVO, String.valueOf(dnSeq), request);
 		mav.setViewName("donate/donateList.html");
 		return mav;
@@ -112,11 +113,10 @@ public class DonateController {
 		fileListVO.setTitle(donateListDomain.getDnTitle());
 		fileListVO.setLoc(donateListDomain.getDnLoc());
 		fileListVO.setIsEdit("edit"); // upload 재활용하기위해서
-
+		
 		mav.addObject("detail", donateListDomain);
 		mav.addObject("files", fileList);
 		mav.addObject("fileLen", fileList.size());
-
 		mav.setViewName("donate/donateEditList.html");
 		return mav;
 	}
@@ -172,6 +172,7 @@ public class DonateController {
 
 		// 세션해제
 		session.removeAttribute("files"); // 삭제
+		 
 		mav = dnListCall();
 		mav.setViewName("donate/donateList.html");
 
@@ -185,5 +186,18 @@ public class DonateController {
 		mav.addObject("items", items);
 		return mav;
 	}
+	   @RequestMapping(value="searchContent")
+	   public ModelAndView searchContent(HttpServletRequest request) {
+	      ModelAndView mav = new ModelAndView();
+	      HashMap<String, String> map = new HashMap<String, String>();
+	      map.put("dnTitle",request.getParameter("searchtitle"));
+	      System.out.println("searchtitle : "+request.getParameter("searchtitle"));
+	      List<DonateListDomain> items = donateService.dnsearchTitle(map);
+	      System.out.println("items ==> " + items);
+	      mav.addObject("items", items);
+	      mav.setViewName("donate/donateList.html");
+	      return mav;
+	   }
+	
 
 }

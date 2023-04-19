@@ -223,5 +223,10 @@ public class DonateServiceImple implements DonateService {
 	public List<DonateFileDomain> donateSelectOneFile(HashMap<String, Object> map) {
 		return donateMapper.donateSelectOneFile(map);
 	}
+	
+	@Override
+	public List<DonateListDomain> dnsearchTitle(HashMap<String, String> map) {
+		return donateMapper.dnsearchTitle(map);
+	}
 
 }

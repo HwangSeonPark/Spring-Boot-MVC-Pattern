@@ -34,4 +34,6 @@ public interface DonateService {
 	
 	// 하나 파일 리스트 조회
 	public List<DonateFileDomain> donateSelectOneFile(HashMap<String, Object> map);
+	
+	public List<DonateListDomain> dnsearchTitle(HashMap<String, String> map);
 }
