@@ -14,13 +14,13 @@
 </th:block>
 
 <head>
-    <title>게시판</title>
+    <title>나눔정보</title>
 </head>
 
 <div th:if=${session.id} layout:fragment="content">
     <div class="container">
-        <th:block th:include="boardd/clauseEdit.html"></th:block>
-        <th:block th:include="boardd/list.html"></th:block>
+        <th:block th:include="donate/clause.html"></th:block>
+        <th:block th:include="donate/list.html"></th:block>
     </div>
 </div>
 

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.co.kr.mapper.DonateMapper">
+
+	<!--select all -->
+	<select id="donateList"
+		resultType="com.co.kr.domain.DonateListDomain">
+		SELECT dn_seq,dn_loc, mb_id, dn_title, dn_content, dn_create_at,
+		dn_update_at
+		FROM jsp.donate order by dn_update_at desc
+	</select>
+
+	<!-- content insert -->
+	<insert id="donatecontentUpload"
+		parameterType="com.co.kr.domain.DonateContentDomain"
+		useGeneratedKeys="true" keyProperty="dnSeq" keyColumn="dn_seq">
+
+		INSERT INTO jsp.donate (
+		dn_loc,
+		dn_title,
+		dn_content,
+		mb_id
+		)
+		VALUES (
+		#{dnLoc},
+		#{dnTitle},
+		#{dnContent},
+		#{mbId}
+		)
+	</insert>
+
+	<!-- file insert -->
+	<insert id="donatefileUpload"
+		parameterType="com.co.kr.domain.DonateFileDomain">
+		INSERT INTO jsp.dnfiles (
+		dn_seq,
+		mb_id,
+		up_original_file_name,
+		up_new_file_name,
+		up_file_path,
+		up_file_size
+		)
+		VALUES (
+		#{dnSeq},
+		#{mbId},
+		#{upOriginalFileName},
+		#{upNewFileName},
+		#{upFilePath},
+		#{upFileSize}
+		)
+	</insert>
+
+	<!-- Content update -->
+	<update id="dnContentUpdate"
+		parameterType="com.co.kr.domain.DonateContentDomain">
+		UPDATE jsp.donate SET
+		dn_seq=#{dnSeq},
+		mb_id=#{mbId},
+		dn_loc=#{dnLoc},
+		dn_title=#{dnTitle},
+		dn_content=#{dnContent},
+		dn_update_at=now()
+		WHERE dn_seq=#{dnSeq}
+	</update>
+
+	<!-- file update -->
+	<update id="dnFileUpdate"
+		parameterType="com.co.kr.domain.DonateFileDomain">
+		UPDATE jsp.dnfiles SET
+		dn_seq=#{dnSeq},
+		mb_id=#{mbId},
+		up_original_file_name=#{upOriginalFileName},
+		up_new_file_name=#{upNewFileName},
+		up_file_path=#{upFilePath},
+		up_file_size=#{upFileSize}
+		WHERE dn_seq=#{dnSeq}
+	</update>
+
+	<!-- Content delete -->
+	<delete id="dnContentRemove" parameterType="hashMap">
+		DELETE FROM jsp.donate WHERE dn_seq=#{dnSeq}
+	</delete>
+	<!-- file delete -->
+	<delete id="dnFileRemove"
+		parameterType="com.co.kr.domain.DonateFileDomain">
+		DELETE FROM jsp.dnfiles WHERE up_new_file_name = #{upNewFileName}
+	</delete>
+
+
+	<!-- content -->
+	<select id="donateSelectOne"
+		resultType="com.co.kr.domain.DonateListDomain" parameterType="map">
+		SELECT dn_seq, dn_loc, mb_id, dn_title, dn_content, dn_create_at,
+		dn_update_at
+		FROM jsp.donate where dn_seq = #{dnSeq}
+	</select>
+
+	<!-- file -->
+	<select id="donateSelectOneFile"
+		resultType="com.co.kr.domain.DonateFileDomain" parameterType="map">
+		SELECT dn_seq, mb_id, up_original_file_name, up_new_file_name, up_file_path,
+		up_file_size
+		FROM jsp.view_donate where dn_seq = #{dnSeq}
+	</select>
+</mapper>

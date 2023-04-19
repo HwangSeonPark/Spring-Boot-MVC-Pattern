@@ -24,7 +24,7 @@ public interface UploadMapper {
 	//file updata
 	public void bdFileUpdate(BoardFileDomain boardFileDomain);
 
-  //content delete 
+    //content delete 
 	public void bdContentRemove(HashMap<String, Object> map);
 	//file delete 
 	public void bdFileRemove(BoardFileDomain boardFileDomain);

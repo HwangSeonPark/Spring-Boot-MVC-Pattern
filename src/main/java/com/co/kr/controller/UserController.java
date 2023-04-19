@@ -20,7 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.co.kr.domain.BoardListDomain;
+import com.co.kr.domain.DonateListDomain;
 import com.co.kr.domain.LoginDomain;
+import com.co.kr.service.DonateService;
 import com.co.kr.service.UploadService;
 import com.co.kr.service.UserService;
 import com.co.kr.util.CommonUtils;
@@ -40,6 +42,8 @@ public class UserController {
 	@Autowired
 	private UploadService uploadService;
 
+	@Autowired
+	private DonateService donateService;
 	@RequestMapping(value = "board")
 	public ModelAndView login(LoginVO loginDTO, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
@@ -92,13 +96,13 @@ public class UserController {
 		return mav; 
 	};
 	
-	@RequestMapping(value = "bdListt")
-	public ModelAndView bdListt() { 
+	@RequestMapping(value = "dnList")
+	public ModelAndView dnList() { 
 		ModelAndView mav = new ModelAndView();
-		List<BoardListDomain> items = uploadService.boardList();
+		List<DonateListDomain> items = donateService.donateList();
 		System.out.println("items ==> "+ items);
 		mav.addObject("items", items);
-		mav.setViewName("boardd/boardList.html");
+		mav.setViewName("donate/donateList.html");
 		return mav; 
 	}
 	
