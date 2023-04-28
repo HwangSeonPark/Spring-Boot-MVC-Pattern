@@ -1,10 +1,11 @@
-<div class="userInfo" th:if=${session.id}>
-	<span th:text="${session.id}"></span><span> 님 / </span> <span
-		th:text="${session.mbLevel}"></span><span> 레벨</span>
-	<button type="button">
-		<a th:href="@{logout}" style="color: #fff">로그아웃</a>
-	</button>
-</div>
+<div class="userInfo" th:if="${session.id != null}">
+		<span th:text="${macAddress}"></span>
+		<span th:text="${session.id}"></span><span> 님 / </span>
+		<span th:text="${session.mbLevel}"></span><span> 레벨</span>
+		<button type="button">
+			<a th:href="@{logout}" style="color: #fff">로그아웃</a>
+		</button>
+	</div>
 
 <div class="title" style="color: #00a2be">나눔리스트</div>
 <form role="form" th:object=${fileListVO} th:action="@{dneditSave}"
