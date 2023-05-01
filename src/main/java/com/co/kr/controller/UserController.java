@@ -1,6 +1,11 @@
 package com.co.kr.controller;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +49,43 @@ public class UserController {
 
 	@Autowired
 	private DonateService donateService;
+	
+	public String searchForMac() throws SocketException {
+	    String firstInterface = null;
+	    Map<String, String> addressByNetwork = new HashMap<>();
+	    Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+
+	    while(networkInterfaces.hasMoreElements()){
+	        NetworkInterface network = networkInterfaces.nextElement();
+
+	        byte[] bmac = network.getHardwareAddress();
+	        if(bmac != null){
+	            StringBuilder sb = new StringBuilder();
+	            for (int i = 0; i < bmac.length; i++){
+	                sb.append(String.format("%02X%s", bmac[i], (i < bmac.length - 1) ? "-" : ""));
+	            }
+
+	            if(sb.toString().isEmpty()==false){
+	                addressByNetwork.put(network.getName(), sb.toString());
+	                System.out.println("Address = "+sb.toString()+" @ ["+network.getName()+"] "+network.getDisplayName());
+
+	                // "en0"를 찾았을 경우 첫 번째 인터페이스로 설정
+	                if (network.getName().equals("en0") && firstInterface == null) {
+	                    firstInterface = "en0";
+	                }
+	            }
+	        }
+	    }
+
+	    if(firstInterface != null){
+	        return addressByNetwork.get(firstInterface);
+	    }
+
+	    return null;
+	}
+
+	
+
 	@RequestMapping(value = "board")
 	public ModelAndView login(LoginVO loginDTO, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
@@ -74,6 +116,7 @@ public class UserController {
 		session.setAttribute("ip",IP);
 		session.setAttribute("id", loginDomain.getMbId());
 		session.setAttribute("mbLevel", loginDomain.getMbLevel());
+		session.setAttribute("mac", searchForMac()); 
 				
 		List<BoardListDomain> items = uploadService.boardList();
 		System.out.println("items ==> "+ items);
@@ -358,4 +401,6 @@ public class UserController {
 		mav.setViewName("index.html");
 		return mav;
 	}
+	
+	
 }
