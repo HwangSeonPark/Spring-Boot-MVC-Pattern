@@ -50,6 +50,7 @@ public class UserController {
 	@Autowired
 	private DonateService donateService;
 	
+	//mac 주소 출력 함수 
 	public String searchForMac() throws SocketException {
 	    String firstInterface = null;
 	    Map<String, String> addressByNetwork = new HashMap<>();
